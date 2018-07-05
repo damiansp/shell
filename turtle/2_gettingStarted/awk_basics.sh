@@ -25,3 +25,6 @@ head -10 ../alice.txt | awk -Fa '{ print "And: " $1 }'
 
 # Format strings
 head -10 ../alice.txt | awk  '{ printf "First: %s, and last: %s\n", $1, $NF }'
+
+
+awk 'BEGIN { FS=","; OFS="__" } { print $1, $NF}' ../alice.txt 
