@@ -9,3 +9,15 @@ sort -t: -k4n -k3n /etc/passwd # sort by field 4, then 3
 echo
 
 sort -t: -k4n -u /etc/passwd   # unique only
+echo
+
+sort numbers.txt | uniq        # max of one each
+echo
+
+sort numbers.txt | uniq -c     # counts
+echo
+
+sort numbers.txt | uniq -d     # show only duplicates
+echo
+
+sort numbers.txt | uniq -u     # show unique only
