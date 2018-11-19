@@ -23,10 +23,39 @@ OLDPATH="$PATH" # disallow suspect PATH vars to be passed in
 PATH=/bin:/usr/bin
 export PATH     # export our minimal PATH instead
 
+all=no
+envvar=
+EXITCODE=0
+PROGRAM=`basename $0`
+VERSION=1.0
 
 
 error() {
     echo "$@" 1>&2
     usage_and_exit 1
 }
+
+
+usage_and_exit() {
+    usage
+    exit $1
+}
+
+
+usage() { echo "Usage: $PROGRAM [--all] [--?] [--version] envvar pattern(s)" }
+
+
+version() { echo "$PROGRAM version $VERSION" }
+
+
+warning() {
+    echo "$@" 1>&2
+    EXITCODE=`expr $EXITCODE + 1` # EXITCODE=$((EXITCODE + 1)) for POSIX sytems
+}
+
+
+while test $# -gt 0; do  # while [ $# -gt 0 ]; do
+    case $1 in
+        #...
+done
 
