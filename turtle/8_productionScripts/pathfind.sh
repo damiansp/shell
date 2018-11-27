@@ -56,8 +56,29 @@ warning() {
 
 while test $# -gt 0; do  # while [ $# -gt 0 ]; do
     case $1 in
-        #...
+        --all | --al | --a | -all | -al | -a)
+            all=yes
+            ;;
+        --help | --hel | --he | --h | '--?' | -help | -hel | -he | -h | '-?' )
+            usage_and_exit 0
+            ;;
+        --version | --versio | --versi | --vers | --ver | --ve | --v | \
+            -version | -versio | -versi | -vers | -ver | -ve | -v)
+            version
+            exit 0
+            ;;
+        -*)
+            error "Unrecognized option: $1"
+            ;;
+        *)
+            break
+            ;;
+    esac
+    shift
 done
+
+envvar="$1"
+test $# -gt 0 && shift
 
 test "x$envvar" = "xPATH" && envvar=OLDPATH # prevent user passing in PATH
 dirpath=`eval echo '${'"$envvar"'}' 2>/dev/null | tr : ' '`
