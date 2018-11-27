@@ -59,3 +59,31 @@ while test $# -gt 0; do  # while [ $# -gt 0 ]; do
         #...
 done
 
+test "x$envvar" = "xPATH" && envvar=OLDPATH # prevent user passing in PATH
+dirpath=`eval echo '${'"$envvar"'}' 2>/dev/null | tr : ' '`
+
+# Check for error conditions
+if test -z "$envvar"; then
+    error Environment variable missing or empty
+elif test "x$dirpath" = "x$envvar"; then
+    error "Broken sh on this platform: cannot expand $envvar"
+elif test -z "$dirpath"; then
+    error Empty directory search path
+elif test $# -eq 0; then
+    exit 0
+fi
+
+
+for pattern in "$@"; do
+    result=
+    for dir in $dirpath; do
+        for file in $dir/$pattern; do
+            if test -f "$file"; then
+                result="$file"
+                echo $result
+                test "$all" = "no" && break 2
+            fi
+        done
+    done
+done
+
